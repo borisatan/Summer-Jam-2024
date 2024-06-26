@@ -24,8 +24,8 @@ while True:
     
     game.gameActions()
 
-# Animaciite bachkat i mojesh da skachash, sega v construktura kazvash cvqt i tva zima suotvetnite spritove
-# ID kato int v entity classa ot 0-3 se setva v construktora i 
+# Animaciite bachkat i mojesh da skachash, sega v construktura kazvash cvqt kato string (see line 12 in main.py) i tva vzima suotvetnite spritove
+# ID kato int v entity classa ot 1-4 se setva v construktora, 0 - default i pokazva che ne e dinozavur a e drugo entity primerno lever/tile 
 # 1 - Blue
 # 2 - Green
 # 3 - Red 
