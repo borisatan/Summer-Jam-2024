@@ -7,7 +7,7 @@ import time
 
 class Player(entity.Entity):
     rect = None
-    animationType = 0
+    animationType = 3
     velocity = pygame.Vector2(10, 17)
     
     isMoving = False
@@ -71,18 +71,19 @@ class Player(entity.Entity):
         return spriteList    
      
     def getPlayerSprites(self):
-        self.idleSprites = self.getPlayerSpriteSubFunction("Assets\Blue\idle.png", 4)
+        self.idleSprites = self.getPlayerSpriteSubFunction("Assets/Blue/idle.png", 4)
         # self.jumpSprites = self.getPlayerSpriteSubFunction("Jump", 2)
         # self.interactSprites = self.getPlayerSpriteSubFunction("Interact", 2)
-        self.runSprites = self.getPlayerSpriteSubFunction("Assets\Blue\run.png", 5)
+        self.runSprites = self.getPlayerSpriteSubFunction("Assets/Blue/run.png", 5)
 
         return self.idleSprites[0] # for initialization
 
     def invert(self):
-        if self.invertSprite:
-            self.texture = self.invertedTexture
-        else:
-            self.texture = self.rightTexture    
+        # if self.invertSprite:
+        #     self.texture = self.invertedTexture
+        # else:
+        #     self.texture = self.rightTexture    
+        return
             
     def setAnimation(self):
         if self.isInteracting:
@@ -110,12 +111,13 @@ class Player(entity.Entity):
     
 
     def animate(self):
-        self.texture = self.createAnimations(self.currentIdleSprite, self.idleSprites, 0.2)
-        
-        self.texture = self.createAnimations(self.currentRunSprite, self.runSprites, 0.2)
+        self.currentIdleSprite = self.createAnimations(self.currentIdleSprite, self.idleSprites, 0.2)
         
         
     def playerActions(self, game):
         self.update()
         self.invert()
+        self.animate()
         game.draw(self, (self.rect.x, self.rect.y))
+
+        #TODO: Fix invert
