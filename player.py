@@ -1,14 +1,12 @@
 import pygame
 import entity
 
-import time
-
-# LINE 66
-
 class Player(entity.Entity):
     rect = None
     animationType = 3
     velocity = pygame.Vector2(6, 17)
+    gravity = 1
+    jumpHeight = 17
     
     dead = False
     delete = False
@@ -19,41 +17,39 @@ class Player(entity.Entity):
     idleSprites = []
     runSprites = []
     kickingSprite = []
-
+    invertSprite = False
+    isJumping = False
 
     def update(self):
         keys = pygame.key.get_pressed()
         
-        self.invertSprite = False
-            
         self.isRunning = False 
-        self.isKicking = False
+        self.isInteracting = False
         self.idle = True
 
-        if keys[pygame.K_a] and not self.isKicking:
+        if keys[pygame.K_a]:
             self.rect.x -= self.velocity.x
             self.isRunning = True
             self.idle = False
             self.invertSprite = True
 
-        elif keys[pygame.K_d] and not self.isKicking:
+        elif keys[pygame.K_d]:
             self.rect.x += self.velocity.x
             self.isRunning = True
             self.idle = False
             self.invertSprite = False
             
         if keys[pygame.K_e]:
-            self.isKicking = True
+            self.isInteracting = True
             self.idle = False
             self.isRunning = False
 
-
-        elif not self.isKicking:
+        elif not self.isInteracting:
             self.idle = True
 
         if keys[pygame.K_SPACE]:
-            self.isJumping = True  
-
+            self.isJumping = True 
+             
 
     def jump(self):
         if self.isJumping:
@@ -63,7 +59,6 @@ class Player(entity.Entity):
             if self.velocity.y < -self.jumpHeight:
                 self.isJumping = False
                 self.velocity.y = self.jumpHeight   
-
 
     def getImage(self, spriteSheet, width, height, scale, color, frame):
         image = pygame.Surface((width, height)).convert_alpha()        
@@ -85,34 +80,31 @@ class Player(entity.Entity):
         return spriteList    
      
     def getPlayerSprites(self):
-        self.idleSprites = self.getPlayerSpriteSubFunction("Assets/Blue/idle.png", 4)
-        # self.jumpSprites = self.getPlayerSpriteSubFunction("Jump", 2)
-        self.kickSprites = self.getPlayerSpriteSubFunction("Assets/Blue/kick.png", 4)
-        self.runSprites = self.getPlayerSpriteSubFunction("Assets/Blue/run.png", 5)
+        if len(self.color) > 0:
+            self.idleSprites = self.getPlayerSpriteSubFunction(f"Assets/{self.color}/idle.png", 4)
+            self.jumpSprites = self.getPlayerSpriteSubFunction(f"Assets/{self.color}/jump.png", 2)
+            self.kickSprites = self.getPlayerSpriteSubFunction(f"Assets/{self.color}/kick.png", 4)
+            self.runSprites = self.getPlayerSpriteSubFunction(f"Assets/{self.color}/run.png", 5)
 
         return self.idleSprites[0] # for initialization
 
     def invert(self):
         if self.invertSprite:
-            self.texture = self.invertedTexture
-        else:
-            self.texture = self.rightTexture    
-        return
+            self.texture = pygame.transform.flip(self.texture, True, False)
+            self.texture.set_colorkey((0, 0, 0))
             
     def setAnimation(self):
-        if self.isKicking:
+        if self.isInteracting:
             self.animationType = 0
 
-        # elif self.isJumping: 
-        #     self.animationType = 1
+        elif self.isJumping: 
+            self.animationType = 1
             
         elif self.isRunning:
             self.animationType = 2   
 
         elif self.idle: 
             self.animationType = 3
-
-
 
     def createAnimations(self, currentSprite, spriteList, animationSpeed):
         currentSprite += animationSpeed
@@ -123,21 +115,20 @@ class Player(entity.Entity):
         self.texture = spriteList[int(currentSprite)]    
         return currentSprite 
     
-
     def animate(self):
         if self.animationType == 3: # idle
             self.currentIdleSprite = self.createAnimations(self.currentIdleSprite, self.idleSprites, 0.16)
         elif self.animationType == 2: # run
             self.currentRunSprite = self.createAnimations(self.currentRunSprite, self.runSprites, 0.22)
+        elif self.animationType == 1: # jump
+            self.currentKickSprite = self.createAnimations(self.currentKickSprite, self.kickSprites, 0.2)
         elif self.animationType == 0: # kick
             self.currentKickSprite = self.createAnimations(self.currentKickSprite, self.kickSprites, 0.2)
         
-        
     def playerActions(self, game):
         self.update()
-        self.invert()
+        self.jump()
         self.setAnimation()
         self.animate()
+        self.invert()
         game.draw(self, (self.rect.x, self.rect.y))
-
-        #TODO: Fix invert
