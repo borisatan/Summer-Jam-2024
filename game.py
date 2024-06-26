@@ -11,6 +11,7 @@ class Game:
     CreditsBtn = None
     QuitBtn = None
     background = None
+    platform = None
 
     def __init__(self):
         pygame.init()  

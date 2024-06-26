@@ -8,34 +8,48 @@ import time
 class Player(entity.Entity):
     rect = None
     animationType = 3
-    velocity = pygame.Vector2(10, 17)
+    velocity = pygame.Vector2(6, 17)
     
-    isMoving = False
-    idle = True
-    isInteracting = False
-    invertSprite = False
     dead = False
     delete = False
     
     currentIdleSprite = 0
+    currentRunSprite = 0
+    currentKickSprite = 0
     idleSprites = []
+    runSprites = []
+    kickingSprite = []
 
 
     def update(self):
         keys = pygame.key.get_pressed()
+        
+        self.invertSprite = False
+            
+        self.isRunning = False 
+        self.isKicking = False
+        self.idle = True
 
-        if keys[pygame.K_a]:
+        if keys[pygame.K_a] and not self.isKicking:
             self.rect.x -= self.velocity.x
+            self.isRunning = True
+            self.idle = False
             self.invertSprite = True
-            self.isMoving = True
 
-        elif keys[pygame.K_d]:
+        elif keys[pygame.K_d] and not self.isKicking:
             self.rect.x += self.velocity.x
+            self.isRunning = True
+            self.idle = False
             self.invertSprite = False
-            self.isMoving = True
+            
+        if keys[pygame.K_e]:
+            self.isKicking = True
+            self.idle = False
+            self.isRunning = False
 
-        else:
-            self.isMoving = False
+
+        elif not self.isKicking:
+            self.idle = True
 
         if keys[pygame.K_SPACE]:
             self.isJumping = True  
@@ -73,26 +87,26 @@ class Player(entity.Entity):
     def getPlayerSprites(self):
         self.idleSprites = self.getPlayerSpriteSubFunction("Assets/Blue/idle.png", 4)
         # self.jumpSprites = self.getPlayerSpriteSubFunction("Jump", 2)
-        # self.interactSprites = self.getPlayerSpriteSubFunction("Interact", 2)
+        self.kickSprites = self.getPlayerSpriteSubFunction("Assets/Blue/kick.png", 4)
         self.runSprites = self.getPlayerSpriteSubFunction("Assets/Blue/run.png", 5)
 
         return self.idleSprites[0] # for initialization
 
     def invert(self):
-        # if self.invertSprite:
-        #     self.texture = self.invertedTexture
-        # else:
-        #     self.texture = self.rightTexture    
+        if self.invertSprite:
+            self.texture = self.invertedTexture
+        else:
+            self.texture = self.rightTexture    
         return
             
     def setAnimation(self):
-        if self.isInteracting:
+        if self.isKicking:
             self.animationType = 0
 
-        elif self.isJumping: 
-            self.animationType = 1
+        # elif self.isJumping: 
+        #     self.animationType = 1
             
-        elif self.isMoving:
+        elif self.isRunning:
             self.animationType = 2   
 
         elif self.idle: 
@@ -111,12 +125,18 @@ class Player(entity.Entity):
     
 
     def animate(self):
-        self.currentIdleSprite = self.createAnimations(self.currentIdleSprite, self.idleSprites, 0.2)
+        if self.animationType == 3: # idle
+            self.currentIdleSprite = self.createAnimations(self.currentIdleSprite, self.idleSprites, 0.16)
+        elif self.animationType == 2: # run
+            self.currentRunSprite = self.createAnimations(self.currentRunSprite, self.runSprites, 0.22)
+        elif self.animationType == 0: # kick
+            self.currentKickSprite = self.createAnimations(self.currentKickSprite, self.kickSprites, 0.2)
         
         
     def playerActions(self, game):
         self.update()
         self.invert()
+        self.setAnimation()
         self.animate()
         game.draw(self, (self.rect.x, self.rect.y))
 
