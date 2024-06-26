@@ -1,19 +1,21 @@
 import pygame
 import button
-
+import entity
 
 class Game:
-    resolution = pygame.Vector2(1800, 950)
+    resolution = pygame.Vector2(1797, 1009)
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode(resolution)
     startMenu = True
     PlayBtn = None
     CreditsBtn = None
     QuitBtn = None
+    background = None
 
     def __init__(self):
         pygame.init()  
         pygame.display.set_caption("game")
+        self.background = entity.Entity(self.resolution, "Assets/background/Background.png", (0, 0), False)
 
         self.PlayBtn = button.Button(image=None, pos=(self.resolution.x / 2, 400), text_input="Play", font=self.get_font(75), base_color="#da5e53", hover_color="#683b4c")           
         self.CreditsBtn = button.Button(image=None, pos=(self.resolution.x / 2, 500), text_input="Credits", font=self.get_font(75), base_color="#da5e53", hover_color="#683b4c")       
@@ -28,6 +30,8 @@ class Game:
                 pygame.quit()
                 exit()
 
+    def draw(self, subject, position=pygame.Vector2(0, 0)):
+        self.screen.blit(subject.texture, position) 
 
     def startMenu(self):
         MenuMousePosition = pygame.mouse.get_pos()

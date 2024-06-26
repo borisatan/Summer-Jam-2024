@@ -1,14 +1,14 @@
 import pygame
 import entity
 
-import pygame
 import time
 
+# LINE 66
 
 class Player(entity.Entity):
     rect = None
     animationType = 0
-    velocity = None
+    velocity = pygame.Vector2(10, 17)
     
     isMoving = False
     idle = True
@@ -17,6 +17,24 @@ class Player(entity.Entity):
     dead = False
     delete = False
 
+    def update(self):
+        keys = pygame.key.get_pressed()
+
+        if keys[pygame.K_a]:
+            self.rect.x -= self.velocity.x
+            self.invertSprite = True
+            self.isMoving = True
+
+        elif keys[pygame.K_d]:
+            self.rect.x += self.velocity.x
+            self.invertSprite = False
+            self.isMoving = True
+
+        else:
+            self.isMoving = False
+
+        if keys[pygame.K_SPACE]:
+            self.isJumping = True  
 
 
     def jump(self):
@@ -42,15 +60,15 @@ class Player(entity.Entity):
         black = (0, 0, 0)
         spriteList = []
 
-        imagePathLocal = "images/Player/.png"[:14] + imagePath + "images/Player/.png"[14:]
+        imagePathLocal = "Assets\Blue\DinoSpritesSingleLong.png"
         image = pygame.image.load(imagePathLocal)
         for i in range(listRange):
-            spriteList.append(self.getImage(image, 200, 200, 3, black, i)) # load sprites to list
+            spriteList.append(self.getImage(image, 24, 24, 3.5, black, i)) # load sprites to list 
 
         return spriteList    
      
     def getPlayerSprites(self):
-        self.idleSprites = self.getPlayerSpriteSubFunction("idle", 8)
+        self.idleSprites = self.getPlayerSpriteSubFunction("idle", 3)
         # self.jumpSprites = self.getPlayerSpriteSubFunction("Jump", 2)
         # self.interactSprites = self.getPlayerSpriteSubFunction("Interact", 2)
         # self.runSprites = self.getPlayerSpriteSubFunction("Run", 8)
@@ -58,11 +76,6 @@ class Player(entity.Entity):
         return self.idleSprites[0] # for initialization
 
     def invert(self):
-        # if self.rect.x > player.rect.x:    on click a, d
-        #     self.invertSprite = True
-        # else:
-        #     self.invertSprite = False
-
         if self.invertSprite:
             self.texture = pygame.transform.flip(self.texture, True, False)
             self.texture.set_colorkey((0, 0, 0))
