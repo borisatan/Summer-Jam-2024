@@ -13,7 +13,7 @@ def loadEntities():
     player.texture = player.getPlayerSprites()
 
     player.rightTexture = player.texture
-    player.invertedTexture = player.rightTexture.flip(player.texture, True, False)     
+    player.invertedTexture = pygame.transform.flip(player.texture, True, False).convert_alpha()   
 
 loadEntities()
 while True:
@@ -22,9 +22,6 @@ while True:
     
     game.getEvent()
     game.draw(game.background)
-    player.update()
-    player.invert()
-    print(player.invertSprite)
-    game.draw(player, (player.rect.x, player.rect.y))
-    game.update()
-    game.clock.tick(60)
+    player.playerActions(game)
+    
+    game.gameActions()

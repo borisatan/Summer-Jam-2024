@@ -16,6 +16,9 @@ class Player(entity.Entity):
     invertSprite = False
     dead = False
     delete = False
+    
+    currentIdleSprite = 0
+    idleSprites = []
 
 
     def update(self):
@@ -61,15 +64,14 @@ class Player(entity.Entity):
         black = (0, 0, 0)
         spriteList = []
 
-        imagePathLocal = "Assets\Blue\DinoSpritesSingleLong.png"
-        image = pygame.image.load(imagePathLocal)
+        image = pygame.image.load(imagePath)
         for i in range(listRange):
             spriteList.append(self.getImage(image, 24, 24, 3.5, black, i)) # load sprites to list 
 
         return spriteList    
      
     def getPlayerSprites(self):
-        self.idleSprites = self.getPlayerSpriteSubFunction("idle", 3)
+        self.idleSprites = self.getPlayerSpriteSubFunction("Assets\Blue\idle.png", 3)
         # self.jumpSprites = self.getPlayerSpriteSubFunction("Jump", 2)
         # self.interactSprites = self.getPlayerSpriteSubFunction("Interact", 2)
         # self.runSprites = self.getPlayerSpriteSubFunction("Run", 8)
@@ -105,3 +107,13 @@ class Player(entity.Entity):
 
         self.texture = spriteList[int(currentSprite)]    
         return currentSprite 
+    
+
+    def animate(self):
+        return
+        # self.texture = self.createAnimations(self.currentIdleSprite)
+    
+    def playerActions(self, game):
+        self.update()
+        self.invert()
+        game.draw(self, (self.rect.x, self.rect.y))

@@ -64,3 +64,7 @@ class Game:
 
     def update(self):
         pygame.display.update()
+
+    def gameActions(self):
+        self.update()
+        self.clock.tick(60)  
