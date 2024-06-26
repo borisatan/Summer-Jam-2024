@@ -12,6 +12,9 @@ def loadEntities():
     player = player.Player((75, 132), "", (25, game.resolution.y - 131), False)  # place (0, 0) in the position variable
     player.texture = player.getPlayerSprites()
 
+    player.rightTexture = player.texture
+    player.invertedTexture = player.rightTexture.flip(player.texture, True, False)     
+
 loadEntities()
 while True:
     while game.startMenu:       

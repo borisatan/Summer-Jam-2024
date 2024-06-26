@@ -4,6 +4,8 @@ import time
 
 class Entity:
     texture = None
+    invertedTexture = None
+    rightTexture = None
     rect = None
    
     def __init__(self, size, texturePath, position, opaque):
@@ -14,5 +16,7 @@ class Entity:
                 self.texture = pygame.image.load(texturePath)
             elif opaque:
                 self.texture = pygame.image.load(texturePath).convert_alpha()    
+
+               
 
 # comment
