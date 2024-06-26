@@ -17,6 +17,7 @@ class Player(entity.Entity):
     dead = False
     delete = False
 
+
     def update(self):
         keys = pygame.key.get_pressed()
 
@@ -56,7 +57,7 @@ class Player(entity.Entity):
 
         return image
     
-    def getPlayerSpriteSubFunction(self, imagePath,  listRange):    
+    def getPlayerSpriteSubFunction(self, imagePath, listRange):    
         black = (0, 0, 0)
         spriteList = []
 
@@ -77,9 +78,10 @@ class Player(entity.Entity):
 
     def invert(self):
         if self.invertSprite:
-            self.texture = pygame.transform.flip(self.texture, True, False)
-            self.texture.set_colorkey((0, 0, 0))
-
+            self.texture = self.invertedTexture
+        else:
+            self.texture = self.rightTexture    
+            
     def setAnimation(self):
         if self.isInteracting:
             self.animationType = 0
