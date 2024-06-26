@@ -71,10 +71,10 @@ class Player(entity.Entity):
         return spriteList    
      
     def getPlayerSprites(self):
-        self.idleSprites = self.getPlayerSpriteSubFunction("Assets\Blue\idle.png", 4)
+        self.idleSprites = self.getPlayerSpriteSubFunction("Assets/Blue/idle.png", 4)
         # self.jumpSprites = self.getPlayerSpriteSubFunction("Jump", 2)
         # self.interactSprites = self.getPlayerSpriteSubFunction("Interact", 2)
-        self.runSprites = self.getPlayerSpriteSubFunction("Assets\Blue\run.png", 5)
+        self.runSprites = self.getPlayerSpriteSubFunction("Assets/Blue/run.png", 5)
 
         return self.idleSprites[0] # for initialization
 
