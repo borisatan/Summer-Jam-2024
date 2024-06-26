@@ -130,7 +130,7 @@ class Player(entity.Entity):
         elif self.animationType == 2: # run
             self.currentRunSprite = self.createAnimations(self.currentRunSprite, self.runSprites, 0.22)
         elif self.animationType == 0: # kick
-            self.currentKickSprite = self.createAnimations(self.currentKickSprite, self.kickSprites, 0.2)
+            self.currentKickSprite = self.createAnimations(self.currentKickSprite, self.kickSprites, 0.13)
         
         
     def playerActions(self, game):
