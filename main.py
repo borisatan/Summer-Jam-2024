@@ -12,8 +12,6 @@ def loadEntities():
     player = player.Player((75, 132), "", (25, game.resolution.y - 131), False)  # place (0, 0) in the position variable
     player.texture = player.getPlayerSprites()
 
-    player.rightTexture = player.texture
-    player.invertedTexture = pygame.transform.flip(player.texture, True, False).convert_alpha()   
 
 loadEntities()
 while True:
