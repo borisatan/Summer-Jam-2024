@@ -15,3 +15,4 @@ class Entity:
             elif opaque:
                 self.texture = pygame.image.load(texturePath).convert_alpha()    
 
+# comment
