@@ -74,7 +74,7 @@ class Player(entity.Entity):
         self.idleSprites = self.getPlayerSpriteSubFunction("Assets\Blue\idle.png", 4)
         # self.jumpSprites = self.getPlayerSpriteSubFunction("Jump", 2)
         # self.interactSprites = self.getPlayerSpriteSubFunction("Interact", 2)
-        # self.runSprites = self.getPlayerSpriteSubFunction("Run", 8)
+        self.runSprites = self.getPlayerSpriteSubFunction("Assets\Blue\run.png", 5)
 
         return self.idleSprites[0] # for initialization
 
@@ -111,7 +111,10 @@ class Player(entity.Entity):
 
     def animate(self):
         self.texture = self.createAnimations(self.currentIdleSprite, self.idleSprites, 0.2)
-    
+        
+        self.texture = self.createAnimations(self.currentRunSprite, self.runSprites, 0.2)
+        
+        
     def playerActions(self, game):
         self.update()
         self.invert()
