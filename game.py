@@ -6,6 +6,7 @@ class Game:
     resolution = pygame.Vector2(1797, 1009)
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode(resolution)
+    currentID = 0
     startMenu = True
     PlayBtn = None
     CreditsBtn = None
@@ -62,6 +63,9 @@ class Game:
 
         pygame.display.update()         
 
+    def changePlayer(self):
+        if pygame.key.get_pressed()[pygame.K_TAB]:
+            self.currentID += 1
 
     def update(self):
         pygame.display.update()

@@ -61,18 +61,24 @@ class Lever(entity.Entity):
                 case 1:
                     self.color = "Red"
                     self.texture = self.redToBlueSprites[0]
+                    
                 case 2:
                     self.color = "Blue"
                     self.texture = self.blueToRedSprites[0]
+                
                 case 3:
                     self.color = "Yellow"
                     self.texture = self.yellowToGreenSprites[0]
+                
                 case 4:
                     self.color = "Green"
                     self.texture = self.greenToYellowSprites[0]
+                
     
 
             self.animationType = 0
+
+            return
 
 
         self.texture = spriteList[int(currentSprite)]    
