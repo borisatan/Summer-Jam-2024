@@ -14,6 +14,7 @@ class Player(entity.Entity):
     currentIdleSprite = 0
     currentRunSprite = 0
     currentKickSprite = 0
+    currentJumpSprite = 0
     idleSprites = []
     runSprites = []
     kickingSprite = []
@@ -121,7 +122,7 @@ class Player(entity.Entity):
         elif self.animationType == 2: # run
             self.currentRunSprite = self.createAnimations(self.currentRunSprite, self.runSprites, 0.22)
         elif self.animationType == 1: # jump
-            self.currentKickSprite = self.createAnimations(self.currentKickSprite, self.kickSprites, 0.2)
+            self.currentKickSprite = self.createAnimations(self.currentJumpSprite, self.jumpSprites, 0.2)
         elif self.animationType == 0: # kick
             self.currentKickSprite = self.createAnimations(self.currentKickSprite, self.kickSprites, 0.13)
         

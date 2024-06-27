@@ -11,6 +11,7 @@ def loadEntities():
     global player
     player = player.Player((75, 132), "", (25, game.resolution.y - 131), False, "Green", 2)  # place (0, 0) in the position variable
     player.texture = player.getPlayerSprites() 
+    
 
 
 loadEntities()
