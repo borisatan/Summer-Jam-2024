@@ -130,8 +130,9 @@ class Player(entity.Entity):
             return True      
         
     def playerActions(self, game):
-        self.update()
-        self.jump()
+        if self.ID == game.currentID:
+            self.update()
+            self.jump()
         self.outOfBounds(game)
         self.setAnimation()
         self.animate()
