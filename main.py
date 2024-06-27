@@ -3,17 +3,20 @@ import random
 import game
 import entity
 import player
-import platform
+import lever
+
 # Before Starting the Game
 game = game.Game()
 
-def loadEntities():
-    global player, ground
+def loadEntities(): 
+    global player, ground, lever
 
     player = player.Player((75 - 8 * 3.5, 132 - 8 * 3.5), "", (25, game.resolution.y - 167), False, "Green", 2)  # place (0, 0) in the position variable
     player.texture = player.getPlayerSprites() 
 
     ground = entity.Entity((1797, 32), "Assets\Tiles\Ground.png", (0, game.resolution.y - 32 * 2), False, scale=2)
+    lever = lever.Lever((70, 70), "", (200, game.resolution.y - (32 * 2 + 60)), False, "Green")
+    lever.texture = lever.getSprites()
     
 
 
@@ -24,13 +27,12 @@ while True:
     
     game.getEvent()
     game.draw(game.background)
+    player.playerActions(game)
+    lever.leverActions(player, game)    
     game.draw(ground, (ground.rect.x, ground.rect.y))
 
 
-    print(ground.rect.colliderect(player.rect))
 
-    player.playerActions(game)
-    
     game.gameActions()
 
 # Animaciite bachkat i mojesh da skachash, sega v construktura kazvash cvqt kato string (see line 12 in main.py) i tva vzima suotvetnite spritove

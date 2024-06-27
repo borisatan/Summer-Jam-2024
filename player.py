@@ -28,6 +28,9 @@ class Player(entity.Entity):
         self.isInteracting = False
         self.idle = True
 
+        # if not self.isJumping:
+        #     self.rect.y += self.gravity
+
         if keys[pygame.K_a]:
             self.rect.x -= self.velocity.x
             self.isRunning = True
@@ -61,14 +64,6 @@ class Player(entity.Entity):
                 self.isJumping = False
                 self.velocity.y = self.jumpHeight   
 
-    def getImage(self, spriteSheet, width, height, scale, color, frame):
-        image = pygame.Surface((width, height)).convert_alpha()        
-        image.blit(spriteSheet, (0, 0), ((frame * width), 0, width, height))    
-       
-        image = pygame.transform.scale(image, (width * scale, height * scale))
-        image.set_colorkey(color)
-
-        return image
     
     def getPlayerSpriteSubFunction(self, imagePath, listRange):    
         black = (0, 0, 0)
