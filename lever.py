@@ -77,8 +77,8 @@ class Lever(entity.Entity):
     
 
             self.animationType = 0
-
-            return
+            self.currentSprite = 0
+            return currentSprite
 
 
         self.texture = spriteList[int(currentSprite)]    

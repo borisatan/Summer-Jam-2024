@@ -6,6 +6,7 @@ class Player(entity.Entity):
     animationType = 3
     velocity = pygame.Vector2(6, 17)
     gravity = 1
+    fallGravity = 15
     jumpHeight = 17
     
     dead = False
@@ -20,16 +21,18 @@ class Player(entity.Entity):
     kickingSprite = []
     invertSprite = False
     isJumping = False
+    isRunning = False
+    idle = True
+    isInteracting = False
 
-    def update(self):
+    def update(self, game):
         keys = pygame.key.get_pressed()
 
         self.isRunning = False 
         self.isInteracting = False
         self.idle = True
 
-        # if not self.isJumping:
-        #     self.rect.y += self.gravity
+        
 
         if keys[pygame.K_a]:
             self.rect.x -= self.velocity.x
@@ -96,11 +99,13 @@ class Player(entity.Entity):
         elif self.isJumping: 
             self.animationType = 1
             
+            
         elif self.isRunning:
-            self.animationType = 2   
+            self.animationType = 2  
 
         elif self.idle: 
             self.animationType = 3
+
 
     def createAnimations(self, currentSprite, spriteList, animationSpeed):
         currentSprite += animationSpeed
@@ -130,9 +135,11 @@ class Player(entity.Entity):
             return True      
         
     def playerActions(self, game):
-        if self.ID == game.currentID:
-            self.update()
+        if self.ID == game.currentID % 3: # 3 is the amount of dinasours + 1
+            self.update(game)
             self.jump()
+        if not self.isJumping :
+            self.rect.y += self.fallGravity    
         self.outOfBounds(game)
         self.setAnimation()
         self.animate()

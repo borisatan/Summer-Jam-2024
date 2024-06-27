@@ -1,11 +1,13 @@
 import pygame
 import button
 import entity
+import time
 
 class Game:
     resolution = pygame.Vector2(1797, 1009)
     clock = pygame.time.Clock()
     screen = pygame.display.set_mode(resolution)
+    delay = time.time()
     currentID = 0
     startMenu = True
     PlayBtn = None
@@ -63,13 +65,23 @@ class Game:
 
         pygame.display.update()         
 
-    def changePlayer(self):
-        if pygame.key.get_pressed()[pygame.K_TAB]:
+    def changePlayer(self, players):
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_TAB] and time.time() - self.delay > 0.2:
+            for i in players:
+                i.idle = True
+                i.isRunning = False
+                i.velocity = pygame.Vector2(6, 17)
+                i.gravity = 1
+                i.jumpHeight = 17
+            
+            self.delay = time.time()
             self.currentID += 1
 
     def update(self):
         pygame.display.update()
 
-    def gameActions(self):
+    def gameActions(self, players):
         self.update()
+        self.changePlayer(players)
         self.clock.tick(60)  
