@@ -23,7 +23,7 @@ class Player(entity.Entity):
 
     def update(self):
         keys = pygame.key.get_pressed()
-        
+
         self.isRunning = False 
         self.isInteracting = False
         self.idle = True
@@ -126,10 +126,19 @@ class Player(entity.Entity):
         elif self.animationType == 0: # kick
             self.currentKickSprite = self.createAnimations(self.currentKickSprite, self.kickSprites, 0.13)
         
+    def outOfBounds(self, game):
+        if self.rect.x <= 0: # left bound
+            self.rect.x = 0
+
+        elif self.rect.x + self.rect.width >= game.resolution.x + 10: # right bound
+            self.rect.x = game.resolution.x - (self.rect.width - 9)  
+            return True      
+        
     def playerActions(self, game):
         self.update()
         self.jump()
+        self.outOfBounds(game)
         self.setAnimation()
         self.animate()
         self.invert()
-        game.draw(self, (self.rect.x, self.rect.y))
+        game.draw(self, (self.rect.x - 8 * 3.5, self.rect.y + 8 * 3.5))

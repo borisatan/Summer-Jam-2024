@@ -31,7 +31,7 @@ class Game:
                 pygame.quit()
                 exit()
 
-    def draw(self, subject, position=pygame.Vector2(0, 0)):
+    def draw(self, subject, position=(0, 0)):
         self.screen.blit(subject.texture, position) 
 
     def startMenu(self):

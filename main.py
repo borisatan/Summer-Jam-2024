@@ -8,9 +8,12 @@ import platform
 game = game.Game()
 
 def loadEntities():
-    global player
-    player = player.Player((75, 132), "", (25, game.resolution.y - 131), False, "Green", 2)  # place (0, 0) in the position variable
+    global player, ground
+
+    player = player.Player((75 - 8 * 3.5, 132 - 8 * 3.5), "", (25, game.resolution.y - 167), False, "Green", 2)  # place (0, 0) in the position variable
     player.texture = player.getPlayerSprites() 
+
+    ground = entity.Entity((1797, 32), "Assets\Tiles\Ground.png", (0, game.resolution.y - 32 * 2), False, scale=2)
     
 
 
@@ -21,6 +24,11 @@ while True:
     
     game.getEvent()
     game.draw(game.background)
+    game.draw(ground, (ground.rect.x, ground.rect.y))
+
+
+    print(ground.rect.colliderect(player.rect))
+
     player.playerActions(game)
     
     game.gameActions()

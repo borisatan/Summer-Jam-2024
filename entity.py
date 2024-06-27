@@ -10,7 +10,7 @@ class Entity:
     rect = None
     color = ""
    
-    def __init__(self, size, texturePath, position, opaque, color="", ID=0):
+    def __init__(self, size, texturePath, position, opaque, color="", scale=1, ID=0):
         self.rect = pygame.Rect(position, size)
         self.color = color
         self.ID = ID
@@ -19,8 +19,8 @@ class Entity:
             if not opaque:
                 self.texture = pygame.image.load(texturePath)
             elif opaque:
-                self.texture = pygame.image.load(texturePath).convert_alpha()    
+                self.texture = pygame.image.load(texturePath).convert_alpha()  
 
-               
-
+            self.texture = pygame.transform.scale(self.texture, (self.rect.w * scale, self.rect.h * scale))
+        
 # comment
