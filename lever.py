@@ -91,9 +91,9 @@ class Lever(entity.Entity):
             case 2:
                 self.currentSprite = self.createAnimations(self.currentSprite, self.redToBlueSprites, 0.2)    
             case 3:
-                self.currentSprite = self.createAnimations(self.currentSprite, self.greenToYellowSprites, 0.2)    
+                self.currentSprite = self.createAnimations(self.currentSprite, self.greenToYellowSprites, 0.15)    
             case 4:
-                self.currentSprite = self.createAnimations(self.currentSprite, self.yellowToGreenSprites, 0.2)   
+                self.currentSprite = self.createAnimations(self.currentSprite, self.yellowToGreenSprites, 0.15)   
 
     def leverActions(self, player, game):
         self.interact(player)
