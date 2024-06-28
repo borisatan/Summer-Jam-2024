@@ -9,6 +9,7 @@ class Game:
     screen = pygame.display.set_mode(resolution)
     delay = time.time()
     currentID = 0
+    level = 1
     startMenu = True
     PlayBtn = None
     CreditsBtn = None
@@ -67,7 +68,12 @@ class Game:
 
     def changePlayer(self, players):
         keys = pygame.key.get_pressed()
-        if keys[pygame.K_TAB] and time.time() - self.delay > 0.2:
+        someoneJumping = False
+        for i in players:
+            if i.isJumping:
+                someoneJumping = True
+
+        if keys[pygame.K_TAB] and not someoneJumping and time.time() - self.delay > 0.2:
             for i in players:
                 i.idle = True
                 i.isRunning = False

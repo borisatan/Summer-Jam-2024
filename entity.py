@@ -10,7 +10,7 @@ class Entity:
     rect = None
     color = ""
    
-    def __init__(self, size, texturePath, position, opaque, color="", scale=1, ID=0):
+    def __init__(self, size, texturePath, position, opaque, color="", scale=1, ID=-1):
         self.rect = pygame.Rect(position, size)
         self.color = color
         self.ID = ID

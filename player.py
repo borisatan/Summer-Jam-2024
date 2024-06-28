@@ -4,10 +4,10 @@ import entity
 class Player(entity.Entity):
     rect = None
     animationType = 3
-    velocity = pygame.Vector2(6, 17)
+    velocity = pygame.Vector2(6, 20)
     gravity = 1
     fallGravity = 15
-    jumpHeight = 17
+    jumpHeight = 20
     
     dead = False
     delete = False
@@ -135,11 +135,11 @@ class Player(entity.Entity):
             return True      
         
     def playerActions(self, game):
-        if self.ID == game.currentID % 3: # 3 is the amount of dinasours + 1
+        if self.ID >= 0 and self.ID == game.currentID % 2: # 2 is the amount of dinasours
             self.update(game)
             self.jump()
-        if not self.isJumping :
-            self.rect.y += self.fallGravity    
+        # if not self.isJumping :
+        #     self.rect.y += self.fallGravity    
         self.outOfBounds(game)
         self.setAnimation()
         self.animate()
