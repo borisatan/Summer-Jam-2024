@@ -4,6 +4,7 @@ import game
 import entity
 import player
 import lever
+import box
 
 # Before Starting the Game
 game = game.Game()
@@ -11,7 +12,7 @@ game = game.Game()
 def loadEntities(): 
     match game.level:
         case 1:
-            global player3, player4, ground, lever, players, levers
+            global player3, player4, ground, lever, players, levers, box, boxes
 
             player3 = player.Player((75 - 8 * 3.5, 132 - 8 * 3.5), "", (25, game.resolution.y - 167), False, "Green", ID=0)  # place (0, 0) in the position variable
             player3.texture = player3.getPlayerSprites() 
@@ -21,10 +22,18 @@ def loadEntities():
             players = [player3, player4]
 
             ground = entity.Entity((1797, 32), "Assets\Tiles\Ground.png", (0, game.resolution.y - 32 * 2), False, scale=2)
-            lever1 = lever.Lever((70, 70), "", (200, game.resolution.y - (32 * 2 + 60)), False, "Green")
+            lever1 = lever.Lever((70, 70), "", (200, game.resolution.y - (32 * 2 + 64)), False, "Green")
             lever1.texture = lever1.getSprites()
 
             levers = [lever1]
+
+            box1 = box.Box((70, 70), "", (300, game.resolution.y - (32 * 2 + 60)), False, "Green")
+            box1.getSprites()
+
+            boxes = [box1]
+
+
+
     
 def collisions(players, solidObjects):
     for i in players:
@@ -49,6 +58,8 @@ while True:
         i.playerActions(game)
         for j in levers:
             j.leverActions(i, game)
+        for k in boxes:
+            k.boxActions(i, game)       
 
     game.draw(ground, (ground.rect.x, ground.rect.y))
 

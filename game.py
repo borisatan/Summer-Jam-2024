@@ -1,5 +1,5 @@
 import pygame
-import button
+import menuButton
 import entity
 import time
 
@@ -22,9 +22,9 @@ class Game:
         pygame.display.set_caption("game")
         self.background = entity.Entity(self.resolution, "Assets/background/Background.png", (0, 0), False)
 
-        self.PlayBtn = button.Button(image=None, pos=(self.resolution.x / 2, 400), text_input="Play", font=self.get_font(75), base_color="#da5e53", hover_color="#683b4c")           
-        self.CreditsBtn = button.Button(image=None, pos=(self.resolution.x / 2, 500), text_input="Credits", font=self.get_font(75), base_color="#da5e53", hover_color="#683b4c")       
-        self.QuitBtn = button.Button(image=None, pos=(self.resolution.x / 2, 600), text_input="Quit", font=self.get_font(75), base_color="#da5e53", hover_color="#683b4c")
+        self.PlayBtn = menuButton.Button(image=None, pos=(self.resolution.x / 2, 400), text_input="Play", font=self.get_font(75), base_color="#da5e53", hover_color="#683b4c")           
+        self.CreditsBtn = menuButton.Button(image=None, pos=(self.resolution.x / 2, 500), text_input="Credits", font=self.get_font(75), base_color="#da5e53", hover_color="#683b4c")       
+        self.QuitBtn = menuButton.Button(image=None, pos=(self.resolution.x / 2, 600), text_input="Quit", font=self.get_font(75), base_color="#da5e53", hover_color="#683b4c")
 
     def get_font(self, size):
         return pygame.font.Font("Font/retro_computer_personal_use.ttf", size)        
@@ -69,11 +69,15 @@ class Game:
     def changePlayer(self, players):
         keys = pygame.key.get_pressed()
         someoneJumping = False
+        someoneInteracting = False
+
         for i in players:
             if i.isJumping:
                 someoneJumping = True
+            if i.isInteracting:
+                someoneInteracting = True    
 
-        if keys[pygame.K_TAB] and not someoneJumping and time.time() - self.delay > 0.2:
+        if keys[pygame.K_TAB] and not someoneJumping and not someoneInteracting and time.time() - self.delay > 0.2:
             for i in players:
                 i.idle = True
                 i.isRunning = False

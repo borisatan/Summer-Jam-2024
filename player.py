@@ -93,15 +93,15 @@ class Player(entity.Entity):
             self.texture.set_colorkey((0, 0, 0))
             
     def setAnimation(self):
-        if self.isInteracting:
+        if self.isRunning:
+            self.animationType = 2  
+
+        elif self.isInteracting:
             self.animationType = 0
 
         elif self.isJumping: 
             self.animationType = 1
-            
-            
-        elif self.isRunning:
-            self.animationType = 2  
+                  
 
         elif self.idle: 
             self.animationType = 3

@@ -87,16 +87,15 @@ class Lever(entity.Entity):
     def animate(self):
         match self.animationType:
             case 1:
-                self.currentSprite = self.createAnimations(self.currentSprite, self.blueToRedSprites, 0.2) 
+                self.currentSprite = self.createAnimations(self.currentSprite, self.blueToRedSprites, 0.15) 
             case 2:
-                self.currentSprite = self.createAnimations(self.currentSprite, self.redToBlueSprites, 0.2)    
+                self.currentSprite = self.createAnimations(self.currentSprite, self.redToBlueSprites, 0.15)    
             case 3:
                 self.currentSprite = self.createAnimations(self.currentSprite, self.greenToYellowSprites, 0.15)    
             case 4:
                 self.currentSprite = self.createAnimations(self.currentSprite, self.yellowToGreenSprites, 0.15)   
 
     def leverActions(self, player, game):
-        self.interact(player)
         self.setAnimations(player)
         self.animate()    
         game.draw(self, (self.rect.x, self.rect.y))                               
